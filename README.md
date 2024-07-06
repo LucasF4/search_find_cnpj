@@ -9,7 +9,8 @@ Projeto desenvolvido apenas com a ideia de facilitar as consultas de CNPJ e reto
 ### Como usar
 
 ```
-    const Cnpj = require('./index')
+    
+    const Cnpj = require('search_find_cnpj')
 
     const cnpj = new Cnpj(27865757000102)
 ```
