@@ -51,6 +51,9 @@ class Cnpj {
         try {
             const response = await fetch(`https://receitaws.com.br/v1/cnpj/${validateCnpjLenght}`);
             const data = await response.json();
+
+            console.log(data)
+
             var atividades = []
             data.atividades_secundarias.forEach((element) => {
                 atividades.push(element.text)
@@ -64,11 +67,19 @@ class Cnpj {
                 fantasia: data.fantasia,
                 atividade_principal: data.atividade_principal[0].text
             }
+
+            var fullAddress = `${data.logradouro}, ${data.numero} ${data.municipio} ${data.uf}`
             
             if(this.obj){
                 this.obj.cnpj == true ? retorno.cnpj = data.cnpj : ''
                 this.obj.cep == true ? retorno.cep = data.cep : ''
                 this.obj.atividades_secundarias == true ? retorno.atividades_secundarias = atividades : ''
+                this.obj.tipo == true ? retorno.tipo = data.tipo : ''
+                this.obj.natureza_juridica == true ? retorno.natureza_juridica = data.natureza_juridica : ''
+                this.obj.endereco == 'completo' ? retorno.endereco = fullAddress :
+                        this.obj.endereco == 'individual' ? 
+                            retorno.endereco = [{logradouro : data.logradouro, numero: data.numero, municipio: data.municipio, uf: data.uf}] : ''
+                this.obj.telefone == true ? retorno.telefone = data.telefone : ''
             }
             
             return retorno;
@@ -77,10 +88,6 @@ class Cnpj {
         }
     }
 
-}
-
-function teste(){
-    console.log("Aqui é um teste")
 }
 
 module.exports = Cnpj

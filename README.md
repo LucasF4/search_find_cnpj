@@ -1,10 +1,21 @@
 <div align="center">
-    <img src="./icon.gif" width="250x" />
+    <img src="./icon.gif" width="300px" />
 </div>
 
 # SEARCH FIND CNPJ
 
 Projeto desenvolvido apenas com a ideia de facilitar as consultas de CNPJ e retornar os dados de forma mais filtrada possível com o seu nível de importância. Também é uma ideia de fazer os códigos dos desenvolvedores mais limpos, declarando apenas uma classe e inserindo as informações necessárias no construtor, sem o uso de fetch no código principal.
+
+## Documentação
+https://github.com/LucasF4/search_find_cnpj/blob/main/README.md
+
+> Node Version > v.18
+
+### Instalação
+
+```
+    npm install search_find_cnpj
+```
 
 ### Como usar
 
@@ -32,12 +43,6 @@ Você pode informar tanto uma string como um número inteiro.
         razaoSocial: 'RAZAO SOCIAL',
         fantasia: '',
         atividade_principal: 'Comércio varejista de produtos fictícios',
-        atividades_secundarias: [
-            'Comércio varejista de mercadorias legais',
-            'Comércio varejista de cosméticos sensacionais',
-            'Comércio varejista de produtos saneantes',
-            'Atividades de profissionais da área de tecnologia'
-        ]
     }
 ```
 
@@ -46,8 +51,9 @@ Você obterá como resposta esse objeto que é padrão, mas poderá adicionar ca
 ```
     const cnpj = new Cnpj("seu cnpj aqui",
     {
-        cnpj: true,
-        cep: true
+        endereco: "completo",
+        cep: true,
+        atividades_secundarias: true
     })
 
     cnpj.consulta()
@@ -68,18 +74,32 @@ Você obterá como resposta esse objeto que é padrão, mas poderá adicionar ca
             'Comércio varejista de produtos saneantes',
             'Atividades de profissionais da área de tecnologia'
         ],
-        cnpj: 'seu cnpj também vem aqui',
+        endereco: 'endereço completo aqui',
         cep: '40.028-922'
     }
 ```
 
-Após adicionar na classe dois campos `cnpj` e `cep` como verdadeiros, eles também são retornados na consulta, ficando a critério do desenvolvedor adicioná-los ou não. Esses campos não são obrigatórios!
+Após adicionar na classe dois campos `cep` e `atividades_secundarias` como verdadeiros, eles também são retornados na consulta, ficando a critério do desenvolvedor adicioná-los ou não. No caso do campo `endereco` foi definido como **"completo"**, assim você obterá a resposta com todas as informações de endereço completa, caso você retorne como **individual**, ele montará um objeto com os campos `logradouro, numero, municipio e uf` com seus respectivos valores.<br> 
+Esses campos não são obrigatórios!
 
 ### Considerações
 
 Foi utilizado a API da receita para realizar a consulta dos CNPJ, portanto toda aplicação terá até **3 consultas livres no período de 1 minuto**.
 
 O intuito dessa lib é apenas deixar seu código limpo e realizar as consultas de forma mais facilitada.
+
+### Parâmetros
+```
+    {
+        cnpj: true,
+        cep: true,
+        atividades_secundarias: true,
+        tipo: true,
+        natureza_juridica: true,
+        endereco: "completo" / "individual" (Escolher apenas um dos dois),
+        telefone: true
+    }
+```
 
 ### Benefícios
 - Também trás alguns benefícios de testes, no que evita com que lance consultas desnecessárias, onde a receita não realiza esses tratamentos e conta o retorno mal sucedido como uma consulta, fazendo você perder 1 de 3 consultas por minuto.
