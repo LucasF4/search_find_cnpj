@@ -21,6 +21,7 @@ class Cnpj {
     }
 
     // Função que adicionar zeros na frente caso o tamanho informado não seja atingido
+    // Isso serve para o tratamento de aplicações que utilizam o CNPJ como inteiro e o zero inicial acaba não sendo validado
     leftPadWidthZeros(cnpjSanitizado){
         return '0'.repeat(this.SIZE_OF - cnpjSanitizado.toString().length) + cnpjSanitizado;
     }
@@ -71,15 +72,16 @@ class Cnpj {
             var fullAddress = `${data.logradouro}, ${data.numero} ${data.municipio} ${data.uf}`
             
             if(this.obj){
-                this.obj.cnpj == true ? retorno.cnpj = data.cnpj : ''
-                this.obj.cep == true ? retorno.cep = data.cep : ''
+                this.obj.cnpj                   == true ? retorno.cnpj = data.cnpj : ''
+                this.obj.cep                    == true ? retorno.cep = data.cep : ''
                 this.obj.atividades_secundarias == true ? retorno.atividades_secundarias = atividades : ''
-                this.obj.tipo == true ? retorno.tipo = data.tipo : ''
-                this.obj.natureza_juridica == true ? retorno.natureza_juridica = data.natureza_juridica : ''
-                this.obj.endereco == 'completo' ? retorno.endereco = fullAddress :
-                        this.obj.endereco == 'individual' ? 
+                this.obj.tipo                   == true ? retorno.tipo = data.tipo : ''
+                this.obj.natureza_juridica      == true ? retorno.natureza_juridica = data.natureza_juridica : ''
+                this.obj.endereco               == 'completo' ? retorno.endereco = fullAddress :
+                        this.obj.endereco       == 'individual' ? 
                             retorno.endereco = [{logradouro : data.logradouro, numero: data.numero, municipio: data.municipio, uf: data.uf}] : ''
-                this.obj.telefone == true ? retorno.telefone = data.telefone : ''
+                this.obj.telefone               == true ? retorno.telefone = data.telefone : '',
+                this.obj.email                  == true ? retorno.email = data.email : ''
             }
             
             return retorno;

@@ -7,9 +7,11 @@
 Projeto desenvolvido apenas com a ideia de facilitar as consultas de CNPJ e retornar os dados de forma mais filtrada possível com o seu nível de importância. Também é uma ideia de fazer os códigos dos desenvolvedores mais limpos, declarando apenas uma classe e inserindo as informações necessárias no construtor, sem o uso de fetch no código principal.
 
 ## Documentação
-https://github.com/LucasF4/search_find_cnpj/blob/main/README.md
+> https://github.com/LucasF4/search_find_cnpj/blob/main/README.md
+>
+> https://www.npmjs.com/package/search_find_cnpj
 
-> Node Version > v.18
+Node Version Required v18+
 
 ### Instalação
 
@@ -97,7 +99,8 @@ O intuito dessa lib é apenas deixar seu código limpo e realizar as consultas d
         tipo: true,
         natureza_juridica: true,
         endereco: "completo" / "individual" (Escolher apenas um dos dois),
-        telefone: true
+        telefone: true,
+        email: true
     }
 ```
 
