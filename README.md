@@ -21,11 +21,19 @@ Node Version Required v18+
 
 ### Como usar
 
+Através do construtor
 ```
-    
     const Cnpj = require('search_find_cnpj')
 
-    const cnpj = new Cnpj(27865757000102)
+    const cnpj = new Cnpj(99999999999999)
+```
+Versão 1.0.4:<br>
+Por meio de funções
+```
+    const Cnpj = require('search_find_cnpj)
+    const cnpj = new Cnpj()
+
+    cnpj.setCnpj("99.999.999/9999-99")
 ```
 
 Apenas com essa declaração, você consegue realizar a consulta do seu CNPJ.
@@ -50,6 +58,7 @@ Você pode informar tanto uma string como um número inteiro.
 
 Você obterá como resposta esse objeto que é padrão, mas poderá adicionar campos adicionais conforme consta nesta documentação.
 
+Informando parâmetros pelo construtor
 ```
     const cnpj = new Cnpj("seu cnpj aqui",
     {
@@ -57,6 +66,44 @@ Você obterá como resposta esse objeto que é padrão, mas poderá adicionar ca
         cep: true,
         atividades_secundarias: true
     })
+
+    cnpj.consulta()
+    .then(console.log)
+
+    // RETORNO
+    {
+        
+        abertura: '11/03/2014',
+        situacao: 'ATIVA',
+        last_att: '2024-06-14T19:34:28.209Z',
+        razaoSocial: 'RAZAO SOCIAL',
+        fantasia: '',
+        atividade_principal: 'Comércio varejista de produtos fictícios',
+        atividades_secundarias: [
+            'Comércio varejista de mercadorias legais',
+            'Comércio varejista de cosméticos sensacionais',
+            'Comércio varejista de produtos saneantes',
+            'Atividades de profissionais da área de tecnologia'
+        ],
+        endereco: 'endereço completo aqui',
+        cep: '40.028-922'
+    }
+```
+
+Versão 1.0.4:<br>
+Informando parâmetros por funções
+```
+    const cnpj = new Cnpj()
+
+    cnpj
+        .setCnpj("99999999999999")
+        .setParams(
+            {
+                endereco: "completo",
+                cep: true,
+                atividades_secundarias: true
+            }
+        )
 
     cnpj.consulta()
     .then(console.log)
@@ -114,5 +161,3 @@ O intuito dessa lib é apenas deixar seu código limpo e realizar as consultas d
 ### Pontos Negativos
 
 - Limita por 3 consultas por minuto, plano gratuito da receitaws.
-
-- Limitações no retorno. Até o momento dessa versão **(v1)**, apenas estará disponíveis os campos `cnpj, cep` na filtragem.

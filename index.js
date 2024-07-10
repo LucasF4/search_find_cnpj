@@ -6,6 +6,15 @@ class Cnpj {
         this.obj = obj;
     }
 
+    setCnpj(cnpj){
+        this.cnpj = cnpj
+        return this;
+    }
+
+    setParams(obj){
+        this.obj = obj
+    }
+
     // Função responsável pela sanitização da string, equivale ao remover todos os caracteres especiais que o CNPJ possuir
     // apenas em caso da variável que for passada por parâmebro seja uma string
     sanitizacao(){
