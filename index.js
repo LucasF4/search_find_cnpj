@@ -88,7 +88,8 @@ class Cnpj {
                         this.obj.endereco       == 'individual' ? 
                             retorno.endereco = [{logradouro : data.logradouro, numero: data.numero, municipio: data.municipio, uf: data.uf}] : ''
                 this.obj.telefone               == true ? retorno.telefone = data.telefone : '',
-                this.obj.email                  == true ? retorno.email = data.email : ''
+                this.obj.email                  == true ? retorno.email = data.email : '',
+                this.obj.capital_social         == true ? retorno.capital_social = data.capital_social : ''
             }
             
             return retorno;

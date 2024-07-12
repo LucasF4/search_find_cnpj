@@ -147,7 +147,8 @@ O intuito dessa lib é apenas deixar seu código limpo e realizar as consultas d
         natureza_juridica: true,
         endereco: "completo" / "individual" (Escolher apenas um dos dois),
         telefone: true,
-        email: true
+        email: true,
+        capital_social: true
     }
 ```
 
