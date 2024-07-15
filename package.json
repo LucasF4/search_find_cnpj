@@ -1,6 +1,6 @@
 {
   "name": "search_find_cnpj",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Pacote úteis para buscar facilitada de CNPJ e retorno mais limpo",
   "main": "index.js",
   "scripts": {
