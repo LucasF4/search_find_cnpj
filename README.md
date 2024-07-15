@@ -53,6 +53,7 @@ Você pode informar tanto uma string como um número inteiro.
         razaoSocial: 'RAZAO SOCIAL',
         fantasia: '',
         atividade_principal: 'Comércio varejista de produtos fictícios',
+        status: 'OK'
     }
 ```
 
@@ -79,6 +80,7 @@ Informando parâmetros pelo construtor
         razaoSocial: 'RAZAO SOCIAL',
         fantasia: '',
         atividade_principal: 'Comércio varejista de produtos fictícios',
+        status: 'OK',
         atividades_secundarias: [
             'Comércio varejista de mercadorias legais',
             'Comércio varejista de cosméticos sensacionais',
@@ -117,6 +119,7 @@ Informando parâmetros por funções
         razaoSocial: 'RAZAO SOCIAL',
         fantasia: '',
         atividade_principal: 'Comércio varejista de produtos fictícios',
+        status: 'OK',
         atividades_secundarias: [
             'Comércio varejista de mercadorias legais',
             'Comércio varejista de cosméticos sensacionais',

@@ -73,7 +73,8 @@ class Cnpj {
                 last_att: data.ultima_atualizacao,
                 razaoSocial: data.nome,
                 fantasia: data.fantasia,
-                atividade_principal: data.atividade_principal[0].text
+                atividade_principal: data.atividade_principal[0].text,
+                status: data.status
             }
 
             var fullAddress = `${data.logradouro}, ${data.numero} ${data.municipio} ${data.uf}`
