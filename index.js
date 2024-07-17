@@ -62,6 +62,10 @@ class Cnpj {
             const response = await fetch(`https://receitaws.com.br/v1/cnpj/${validateCnpjLenght}`);
             const data = await response.json();
 
+            if(data.status == 'ERROR'){
+                return data
+            }
+
             var atividades = []
             data.atividades_secundarias.forEach((element) => {
                 atividades.push(element.text)

@@ -154,6 +154,14 @@ O intuito dessa lib é apenas deixar seu código limpo e realizar as consultas d
         capital_social: true
     }
 ```
+### Retorno de Erros
+CNPJ Consultado Inválido:
+```
+{
+    status: 'ERROR', 
+    message: 'CNPJ inválido'
+}
+```
 
 ### Benefícios
 - Também trás alguns benefícios de testes, no que evita com que lance consultas desnecessárias, onde a receita não realiza esses tratamentos e conta o retorno mal sucedido como uma consulta, fazendo você perder 1 de 3 consultas por minuto.
