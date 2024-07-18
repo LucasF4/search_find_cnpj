@@ -4,6 +4,8 @@ class Cnpj {
         this.cnpj = cnpj;
         this.SIZE_OF = 14;
         this.obj = obj;
+        this.fd = '';
+        this.sd = '';
     }
 
     setCnpj(cnpj){
@@ -21,9 +23,19 @@ class Cnpj {
         const cnpjTypeOf = typeof this.cnpj
 
         if(cnpjTypeOf === 'string'){
-            return (this.cnpj).toString().replace(/\D+/g, '')
+            var cnpjSanitized = (this.cnpj).toString().replace(/\D+/g, '')
+            var p = this.firstDigit(cnpjSanitized)
+            if(p.cnpj === false){
+                return p
+            }
+            return cnpjSanitized
         }else if(cnpjTypeOf === 'number'){
-            return this.cnpj.toString()
+            var cnpjSanitized = this.cnpj.toString()
+            var p = this.firstDigit(cnpjSanitized)
+            if(p.cnpj === false){
+                return p
+            }
+            return cnpjSanitized
         }
 
         throw new Error("Tipo não configurado")
@@ -53,6 +65,10 @@ class Cnpj {
     async consulta(){
 
         var sanitizacao = this.sanitizacao()
+
+        if(sanitizacao.cnpj === false){
+            return sanitizacao
+        }
 
         var leftPadWidthZeros = this.leftPadWidthZeros(sanitizacao)
 
@@ -100,6 +116,76 @@ class Cnpj {
             return retorno;
         } catch (error) {
             throw new Error("Ocorreu um erro na consulta");
+        }
+    }
+
+    // CRIAÇÃO DOS MÉTODOS PARA A VALIDAÇÃO DA VALIDADE DO CNPJ
+    // PARA EVITAR CONSULTAS DE CNPJ QUE SÃO INVÁLIDOS
+    // FOI CRIADO UMA LÓGICA QUE REALIZA O CALCULO ONDE VALIDA TODOS OS NUMEROS DO CNPJ INFORMADO
+    // PERCORRENDO TODOS OS VALORES E VERIFICANDO O DIGITO VERIFICADOR
+    // ESSE PROCESSO OCORRE APÓS A SANATIZAÇÃO DO CNPJ, PARA EVITAR QUALQUER PROBLEMA COM VALORES NÃO INFORMADOS
+    // CASO OS VALORES VERIFICADORES SEREM IGUAIS COM OS VERIFICADORES INFORMADOS, REALIZARÁ A CONSULTA
+    // REDUZINDO AINDA MAIS O NUMERO DE VERIFICAÇÕES E AUMENTANDO AS CONSULTAS DIRETAMENTE NA RECEITA
+    firstDigit(cnpjSanitized){
+        var j = 0
+        var value = []
+        for(var i = 5; i > 1; i--){
+            value.push( i * cnpjSanitized[j] )
+            j++
+        }
+        
+        for(var i = 9; i > 1; i--){
+            value.push(i * cnpjSanitized[j])
+            j++
+        }
+        
+        let n1 = value.reduce((a, e) => a + e, 0)
+        let result = n1 % 11;
+        var verify;
+        if(result < 2){
+            verify = 0
+        }else{
+            verify = 11 - result;
+        }
+        this.fd = verify;
+        return this.secondDigit(cnpjSanitized)
+    }
+
+    secondDigit(cnpjSanitized){
+        var j = 0
+        var value = []
+        for(var i = 6; i > 1; i--){
+            value.push( i * cnpjSanitized[j] )
+            j++
+        }
+        
+        for(var i = 9; i > 1; i--){
+            value.push(i * cnpjSanitized[j])
+            j++
+        }
+        let n1 = value.reduce((a, e) => a + e, 0)
+        let result = n1 % 11;
+        var verify;
+        if(result < 2){
+            verify = 0;
+        }else{
+            verify = 11 - result;
+        }
+        this.sd = verify;
+        return this.compareDigit(cnpjSanitized)
+    }
+
+    compareDigit(cnpjSanitized){
+        let digVerif = '';
+        let digVerifed = (this.fd).toString() + (this.sd).toString(); // CNPJ com Tratamento de String
+        for(var i = cnpjSanitized.length-2; i < cnpjSanitized.length; i++){
+            digVerif += cnpjSanitized[i]
+        }
+        
+        if(digVerif == digVerifed){
+            return {cnpj: true}
+        }else{
+            return {cnpj: false}
         }
     }
 
